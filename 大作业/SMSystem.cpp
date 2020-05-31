@@ -46,6 +46,17 @@ void SMSystem::DrawWireframe()
 	glFlush();
 }
 
+void SMSystem::AddPoint(Vector3f positon, float mass)
+{
+	mass_point_arr[current_point_index++] = MassPoint(positon, mass);
+}
+
+void SMSystem::AddSpring(int p1_index, int p2_index)
+{
+	Spring s = Spring(mass_point_arr[p1_index], mass_point_arr[p2_index]);
+	memcpy_s(&spring_arr[current_spring_index++], sizeof(Spring), &s, sizeof(Spring));
+}
+
 void SMSystem::CalcPoint()
 {
 	for (int i = 0; i < 50; ++i)
