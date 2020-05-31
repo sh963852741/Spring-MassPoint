@@ -14,7 +14,7 @@ void SMSystem::Simulate()
 {
 	CalcSpring();
 	//AddGlobleForce();
-	mass_point_arr[0].AddForce(Vector3f(0.1, 0, 0));
+	mass_point_arr[0].AddForce(Vector3f((float)0.1, 0, 0));
 	CalcPoint();
 }
 
@@ -24,7 +24,7 @@ void SMSystem::MakeTestSurface()
 	spring_arr = (Spring*)operator new (sizeof(Spring) * 49);
 	for (int i = 0; i < 50; ++i)
 	{
-		mass_point_arr[i] = MassPoint(Vector3f(0, 0.8 - i * 0.02, -1));
+		mass_point_arr[i] = MassPoint(Vector3f(0, (float)(0.8 - i * 0.02), -1));
 	}
 	for (int i = 0; i < 49; ++i)
 	{
@@ -50,7 +50,7 @@ void SMSystem::CalcPoint()
 {
 	for (int i = 0; i < 50; ++i)
 	{
-		mass_point_arr[i].Update(0.0001);
+		mass_point_arr[i].Update((float)0.0001);
 	}
 }
 

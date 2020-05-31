@@ -1,12 +1,13 @@
 #include "Spring.h"
 
-Spring::Spring(MassPoint& point1, MassPoint& point2):point_1(point1), point_2(point2)
+Spring::Spring(MassPoint& point1, MassPoint& point2, float spring_constant, float damping_factor)
+	:point_1(point1), point_2(point2)
 {
-	spring_constant = (float)0.2;
-	original_length = (float)0.02;
-	damping_factor = (float)0.5;
-}
 
+	this->spring_constant = spring_constant;
+	original_length = (point1.positon - point2.positon).norm();
+	this->damping_factor = damping_factor;
+}
 void Spring::CalcAndAppForce()
 {
 	Vector3f springVector = point_1.positon - point_2.positon;
