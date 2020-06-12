@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glut.h>
 #include "Spring.h"
+#include "Graphics.h"
 #include <Eigen/Core>
 #include <vector>
 using namespace std;
@@ -14,6 +15,7 @@ public:
 	void Simulate();
 	//void MakeTestSurface();
 	void DrawWireframe();
+	void DrawGraphyics();
 	void AddPoint(Vector3f positon, float mass = 1.0);
 	void AddPoint(MassPoint point);
 	void AddSpring(int p1_index, int p2_index);
@@ -30,4 +32,5 @@ private:
 	void ClrAllForce();
 	vector<MassPoint> mass_point_arr;
 	vector<Spring> spring_arr;
+	Sphere ball;
 };

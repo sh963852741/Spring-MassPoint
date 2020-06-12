@@ -40,7 +40,7 @@ void SMSystem::Simulate()
 //Ê¹ÓÃOpenGL»­³öÍ¼Ïñ
 void SMSystem::DrawWireframe()
 {
-	glClear(GL_COLOR_BUFFER_BIT);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glColor3f(1, 0.2, 0.8);
 	glBegin(GL_LINES);
 	for (int i = 0; i < spring_arr.size(); ++i)
@@ -57,6 +57,11 @@ void SMSystem::DrawWireframe()
 	}
 	glEnd();
 	glFlush();
+}
+
+void SMSystem::DrawGraphyics()
+{
+	ball.Draw();
 }
 
 void SMSystem::AddPoint(Vector3f positon, float mass)
