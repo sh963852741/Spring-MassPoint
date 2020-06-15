@@ -18,5 +18,4 @@ void Sphere::Draw()
 	glTranslatef(center[0], center[1], center[2]);
 	glutSolidSphere(radius, 40, 50);
 	glPopMatrix();
-	glFlush();
 }

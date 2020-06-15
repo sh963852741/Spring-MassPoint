@@ -17,8 +17,8 @@ SMSystem::SMSystem(unsigned point_count, unsigned spring_count)
 
 void SMSystem::Simulate()
 {
-	CalcSpring();
 	AddGlobleForce();
+	CalcSpring();
 	CalcPoint();
 	ClrAllForce();
 }
@@ -56,7 +56,7 @@ void SMSystem::DrawWireframe()
 		glVertex3f(mass_point_arr[i].positon[0], mass_point_arr[i].positon[1], mass_point_arr[i].positon[2]);
 	}
 	glEnd();
-	glFlush();
+	//glFlush();
 }
 
 void SMSystem::DrawGraphyics()
@@ -100,7 +100,7 @@ void SMSystem::CalcPoint()
 {
 	for (unsigned i = 0; i < mass_point_arr.size(); ++i)
 	{
-		mass_point_arr[i].Update((float)0.001);
+		mass_point_arr[i].Update((float)0.01);
 	}
 }
 
@@ -109,6 +109,19 @@ void SMSystem::CalcSpring()
 	for (unsigned i = 0; i < spring_arr.size(); ++i)
 	{
 		spring_arr[i].CalcAndAppForce();
+	}
+	for (unsigned i = 0; i < mass_point_arr.size(); ++i)
+	{
+		if (ball.Contains(mass_point_arr[i].positon))
+		{
+			//mass_point_arr[i].velocity = Vector3f(0, 0, 0);
+			Vector3f origin_force = mass_point_arr[i].GetForce();
+			Vector3f normal_force = mass_point_arr[i].positon - ball.center;
+			//mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+			mass_point_arr[i].positon = ball.center + normal_force.normalized() * ball.radius;
+			//mass_point_arr[i].ClearForce();
+			//mass_point_arr[i].AddForce(Vector3f(0, 2, 0));
+		}
 	}
 }
 

@@ -13,6 +13,7 @@ public:
 	void AddForce(Vector3f force);
 	void Update(float timespan);
 	void ClearForce();
+	Vector3f GetForce();
 private:
 	Vector3f force;
 };

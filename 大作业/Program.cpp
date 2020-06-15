@@ -9,17 +9,25 @@ void display()
 	test.Simulate();
 	test.DrawWireframe();
 	test.DrawGraphyics();
+	glFlush();
 }
 void Init()
 {
-	GLfloat light_position[] = { 0, 1.5, 1.5, 0.0 };
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glOrtho(-1, 1, -1, 1, -1, 1);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
+
+
+	GLfloat light_position[] = { 0, 0.5, 1, 0 };
 	glShadeModel(GL_SMOOTH);
-	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
-
-
-	glEnable(GL_LIGHTING);
-	glEnable(GL_LIGHT0);
 	glEnable(GL_DEPTH_TEST);
+	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glEnable(GL_LIGHT0);
+	glEnable(GL_LIGHTING);
+	
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 void LoadFromFile(SMSystem& smsystem, string fileName = "toufa.obj")
@@ -62,7 +70,7 @@ int main(int argc, char* argv[])
 	{
 		for (int j = 0; j < 20; ++j)
 		{
-			test.AddPoint(MassPoint(Vector3f((float)(j * 0.039 - 0.98), 0.99, -i * 0.04), 0.1));
+			test.AddPoint(MassPoint(Vector3f((float)(j * 0.04 - 0.5), 0.3, -i * 0.04)));
 		}
 	}
 	for (int i = 0; i < 20; ++i)
@@ -83,7 +91,7 @@ int main(int argc, char* argv[])
 	}
 	test.SetPointFixed(0);
 	//test.SetPointFixed(1025);
-	test.SetPointFixed(49);
+	test.SetPointFixed(19);
 	//test.SetPointFixed(2450);
 	//test.MakeTestSurface();
 	glutInit(&argc, argv);

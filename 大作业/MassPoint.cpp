@@ -25,3 +25,8 @@ void MassPoint::ClearForce()
 {
 	force = Vector3f(0, 0, 0);
 }
+
+Vector3f MassPoint::GetForce()
+{
+	return this->force;
+}
