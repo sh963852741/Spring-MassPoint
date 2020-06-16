@@ -22,9 +22,11 @@ void Init()
 
 
 	GLfloat light_position[] = { 0, 0.5, 1, 0 };
+	GLfloat ambient[] = { 1, 1, 1, 0};
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	
@@ -63,6 +65,50 @@ void LoadFromFile(SMSystem& smsystem, string fileName = "toufa.obj")
 		}
 	}
 }
+/*用于鼠标控制的变量*/
+int mouseX = 0, mouseY = 0;
+int mouseLeftDown = 0, mouseRightDown = 0, mouseMiddleDown = 0;
+/*用于鼠标控制的变量*/
+void processMouse(int button, int state, int x, int y)
+{
+	mouseX = x;
+	mouseY = y;
+
+	if (button == GLUT_LEFT_BUTTON)
+	{
+		if (state == GLUT_DOWN)
+		{
+			mouseLeftDown = 1;
+		}
+		else if (state == GLUT_UP)
+			mouseLeftDown = 0;
+	}
+
+	else if (button == GLUT_MIDDLE_BUTTON)
+	{
+		if (state == GLUT_DOWN)
+		{
+			mouseMiddleDown = 1;
+		}
+		else if (state == GLUT_UP)
+			mouseMiddleDown = 0;
+	}
+}
+void processMove(int x, int y)
+{
+	if (mouseLeftDown)
+	{
+		glRotatef((y - mouseY) / 5.0, 1, 0, 0);
+		glRotatef((x - mouseX) / 5.0, 0, 1, 0);
+
+	}
+	if (mouseMiddleDown)
+	{
+		glTranslatef((x - mouseX) / 30.0, (mouseY - y) / 30.0, 0);
+	}
+	mouseX = x;
+	mouseY = y;
+}
 int main(int argc, char* argv[])
 {
 	//LoadFromFile(test);
@@ -90,9 +136,7 @@ int main(int argc, char* argv[])
 		}
 	}
 	test.SetPointFixed(0);
-	//test.SetPointFixed(1025);
 	test.SetPointFixed(19);
-	//test.SetPointFixed(2450);
 	//test.MakeTestSurface();
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
@@ -103,5 +147,7 @@ int main(int argc, char* argv[])
 	Init();
 	//glutReshapeFunc(reshape);
 	glutIdleFunc(display);
+	glutMouseFunc(processMouse);
+	glutMotionFunc(processMove);
 	glutMainLoop();
 }

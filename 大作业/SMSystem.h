@@ -33,4 +33,5 @@ private:
 	vector<MassPoint> mass_point_arr;
 	vector<Spring> spring_arr;
 	Sphere ball;
+	MyRectangle cube;
 };

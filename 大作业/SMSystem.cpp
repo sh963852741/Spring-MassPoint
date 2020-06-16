@@ -61,7 +61,8 @@ void SMSystem::DrawWireframe()
 
 void SMSystem::DrawGraphyics()
 {
-	ball.Draw();
+	//ball.Draw();
+	cube.Draw();
 }
 
 void SMSystem::AddPoint(Vector3f positon, float mass)
@@ -100,7 +101,7 @@ void SMSystem::CalcPoint()
 {
 	for (unsigned i = 0; i < mass_point_arr.size(); ++i)
 	{
-		mass_point_arr[i].Update((float)0.01);
+		mass_point_arr[i].Update((float)0.001);
 	}
 }
 
@@ -112,15 +113,73 @@ void SMSystem::CalcSpring()
 	}
 	for (unsigned i = 0; i < mass_point_arr.size(); ++i)
 	{
-		if (ball.Contains(mass_point_arr[i].positon))
+		/*处理球的碰撞*/
+		//if (ball.Contains(mass_point_arr[i].positon))
+		//{
+		//	//mass_point_arr[i].velocity = Vector3f(0, 0, 0);
+		//	Vector3f origin_force = mass_point_arr[i].GetForce();
+		//	Vector3f normal_force = mass_point_arr[i].positon - ball.center;
+		//	mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+		//	mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+		//	mass_point_arr[i].positon = ball.center + normal_force.normalized() * ball.radius;
+		//	//mass_point_arr[i].ClearForce();
+		//	//mass_point_arr[i].AddForce(Vector3f(0, 0.1, 0));
+		//}
+
+		/*处理矩形的碰撞*/
+		Side res = cube.Contains(mass_point_arr[i].positon, mass_point_arr[i].velocity);
+		if (res >> 4 & 1)
 		{
-			//mass_point_arr[i].velocity = Vector3f(0, 0, 0);
-			Vector3f origin_force = mass_point_arr[i].GetForce();
-			Vector3f normal_force = mass_point_arr[i].positon - ball.center;
-			//mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
-			mass_point_arr[i].positon = ball.center + normal_force.normalized() * ball.radius;
-			//mass_point_arr[i].ClearForce();
-			//mass_point_arr[i].AddForce(Vector3f(0, 2, 0));
+			if (res == Side::top)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(0, 1, 0);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[1] = cube.right_top_near[1];
+				/*mass_point_arr[i].ClearForce();
+				mass_point_arr[i].AddForce(Vector3f(0, 0.1, 0));*/
+			}
+			else if (res == Side::right)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(1, 0, 0);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[0] = cube.right_top_near[0];
+			}
+			else if (res == Side::front)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(0, 0, 1);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[2] = cube.right_top_near[2];
+			}
+			else if (res == Side::back)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(0, 0, -1);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[2] = cube.left_bottom_far[2];
+			}
+			else if (res == Side::left)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(-1, 0, 0);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[0] = cube.left_bottom_far[0];
+			}
+			else if (res == Side::bottom)
+			{
+				Vector3f origin_force = mass_point_arr[i].GetForce();
+				Vector3f normal_force = Vector3f(0, -1, 0);
+				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
+				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				//mass_point_arr[i].positon[1] = cube.left_bottom_far[1];
+			}
 		}
 	}
 }
