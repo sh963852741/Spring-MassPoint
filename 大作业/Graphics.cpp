@@ -73,27 +73,27 @@ Side MyRectangle::Contains(Vector3f position, Vector3f velocity)
 		//¼ì²âtop
 		n = Vector3f(0, -1, 0);
 		res_t = n.dot(right_top_near - position) / n.dot(velocity);
-		if (res_t < 0)return Side::top;
+		if (res_t < 0 && res_t != -INFINITY)return Side::top;
 		//¼ì²âright
 		n = Vector3f(-1, 0, 0);
 		res_t = n.dot(right_top_near - position) / n.dot(velocity);
-		if (res_t < 0)return Side::right;
+		if (res_t < 0 && res_t != -INFINITY)return Side::right;
 		//¼ì²âfront
 		n = Vector3f(0, 0, -1);
 		res_t = n.dot(right_top_near - position) / n.dot(velocity);
-		if (res_t < 0)return Side::front;
+		if (res_t < 0 && res_t != -INFINITY)return Side::front;
 		//¼ì²âback
 		n = Vector3f(0, 0, 1);
 		res_t = n.dot(left_bottom_far - position) / n.dot(velocity);
-		if (res_t < 0)return Side::back;
+		if (res_t < 0 && res_t != -INFINITY)return Side::back;
 		//¼ì²âleft
 		n = Vector3f(1, 0, 0);
 		res_t = n.dot(left_bottom_far - position) / n.dot(velocity);
-		if (res_t < 0)return Side::left;
+		if (res_t < 0 && res_t != -INFINITY)return Side::left;
 		//¼ì²âbottom
 		n = Vector3f(0, 1, 0);
 		res_t = n.dot(left_bottom_far - position) / n.dot(velocity);
-		if (res_t < 0)return Side::bottom;
+		if (res_t < 0 && res_t != -INFINITY)return Side::bottom;
 		throw hit_unknown;
 		return Side::hit_unknown;
 	}

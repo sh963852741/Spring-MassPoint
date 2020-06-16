@@ -136,6 +136,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(0, 1, 0);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[1] = cube.right_top_near[1];
 				/*mass_point_arr[i].ClearForce();
 				mass_point_arr[i].AddForce(Vector3f(0, 0.1, 0));*/
@@ -146,6 +147,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(1, 0, 0);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[0] = cube.right_top_near[0];
 			}
 			else if (res == Side::front)
@@ -154,6 +156,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(0, 0, 1);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[2] = cube.right_top_near[2];
 			}
 			else if (res == Side::back)
@@ -162,6 +165,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(0, 0, -1);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[2] = cube.left_bottom_far[2];
 			}
 			else if (res == Side::left)
@@ -170,6 +174,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(-1, 0, 0);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[0] = cube.left_bottom_far[0];
 			}
 			else if (res == Side::bottom)
@@ -178,6 +183,7 @@ void SMSystem::CalcSpring()
 				Vector3f normal_force = Vector3f(0, -1, 0);
 				mass_point_arr[i].AddForce(normal_force.dot(-origin_force) / normal_force.norm() * normal_force.normalized());
 				mass_point_arr[i].velocity += normal_force.dot(-mass_point_arr[i].velocity) / normal_force.norm() * normal_force.normalized();
+				mass_point_arr[i].positon = mass_point_arr[i].last_positon;
 				//mass_point_arr[i].positon[1] = cube.left_bottom_far[1];
 			}
 		}

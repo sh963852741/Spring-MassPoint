@@ -16,6 +16,7 @@ void MassPoint::AddForce(Vector3f force)
 void MassPoint::Update(float timespan)
 {
 	if (fixed)return;
+	last_positon = positon;
 	velocity += force / mass * timespan;
 		//(force + Vector3f(0, -1, 0)) / mass * timespan;
 	positon += velocity * timespan;
