@@ -1,5 +1,5 @@
 #include "SMSystem.h"
-
+#include <Eigen/Dense>
 SMSystem::SMSystem()
 {
 	
@@ -54,6 +54,36 @@ void SMSystem::DrawWireframe()
 	for (int i = 0; i < mass_point_arr.size(); ++i)
 	{
 		glVertex3f(mass_point_arr[i].positon[0], mass_point_arr[i].positon[1], mass_point_arr[i].positon[2]);
+	}
+	glEnd();
+	//glFlush();
+}
+
+void SMSystem::DrawCloth()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glColor3f(1, 1, 1);
+	Vector3f points[4];
+	glBegin(GL_QUADS);
+	GLfloat diffuse[]= { 0.8,0.8,0.8,1.0 };
+	GLfloat specular[] = { 0.8,0.8,0.8,1.0 };
+	glMaterialfv(GL_FRONT, GL_SPECULAR, specular);
+	glMaterialfv(GL_FRONT, GL_DIFFUSE, diffuse);
+	glMateriali(GL_FRONT, GL_SHININESS, 60);
+	for (int i = 0; i < mass_point_arr.size(); ++i)
+	{
+		if ((i + 1) % 20 == 0)continue;
+		points[0] = mass_point_arr[i].positon;
+		points[1] = mass_point_arr[i+1].positon;
+		if (i + 20 == 380)break;
+		points[2] = mass_point_arr[i + 20].positon;
+		points[3] = mass_point_arr[i + 21].positon;
+		Vector3f n = (points[2] - points[0]).cross(points[1] - points[0]).normalized();
+		glNormal3f(n[0],n[1],n[2]);
+		glVertex3f(points[0][0], points[0][1], points[0][2]);
+		glVertex3f(points[1][0], points[1][1], points[1][2]);
+		glVertex3f(points[3][0], points[3][1], points[3][2]);
+		glVertex3f(points[2][0], points[2][1], points[2][2]);
 	}
 	glEnd();
 	//glFlush();

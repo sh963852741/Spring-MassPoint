@@ -2,7 +2,6 @@
 #include <GL/glut.h>
 #include "Spring.h"
 #include "Graphics.h"
-#include <Eigen/Core>
 #include <vector>
 using namespace std;
 using namespace Eigen;
@@ -15,6 +14,7 @@ public:
 	void Simulate();
 	//void MakeTestSurface();
 	void DrawWireframe();
+	void DrawCloth();
 	void DrawGraphyics();
 	void AddPoint(Vector3f positon, float mass = 1.0);
 	void AddPoint(MassPoint point);

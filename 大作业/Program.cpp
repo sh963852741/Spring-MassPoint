@@ -7,7 +7,8 @@ SMSystem test = SMSystem();
 void display()
 {
 	test.Simulate();
-	test.DrawWireframe();
+	//test.DrawWireframe();
+	test.DrawCloth();
 	test.DrawGraphyics();
 	glFlush();
 }
@@ -21,12 +22,17 @@ void Init()
 	gluLookAt(0.0, 0.0, 0.0, 0.0, 0.0, -1.0, 0.0, 1.0, 0.0);
 
 
-	GLfloat light_position[] = { 0, 0.5, 1, 0 };
-	GLfloat ambient[] = { 1, 1, 1, 0};
+	GLfloat light_position[] = { 0, 0, 1.0, 0 };
+	GLfloat ambient[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat diffuse[] = { 1.0, 1.0, 1.0, 1.0 };
+	GLfloat specular[] = { 1.0, 1.0, 1.0, 1.0 };
 	glShadeModel(GL_SMOOTH);
 	glEnable(GL_DEPTH_TEST);
 	glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse);
 	glLightfv(GL_LIGHT0, GL_AMBIENT, ambient);
+	glLightfv(GL_LIGHT0, GL_SPECULAR, specular);
+
 	glEnable(GL_LIGHT0);
 	glEnable(GL_LIGHTING);
 	
